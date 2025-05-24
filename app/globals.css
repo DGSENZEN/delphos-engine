@@ -1,0 +1,469 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode colors */
+    --background: 36 30% 96%;
+    --foreground: 220 10% 8%;
+    --card: 36 30% 98%;
+    --card-foreground: 220 10% 8%;
+    --popover: 36 30% 96%;
+    --popover-foreground: 220 10% 8%;
+    --primary: 220 10% 8%;
+    --primary-foreground: 36 30% 96%;
+    --secondary: 36 30% 60%;
+    --secondary-foreground: 220 10% 8%;
+    --muted: 36 20% 90%;
+    --muted-foreground: 220 10% 40%;
+    --accent: 36 30% 60%;
+    --accent-foreground: 220 10% 8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 36 30% 96%;
+    --border: 36 20% 85%;
+    --input: 36 20% 90%;
+    --ring: 220 10% 8%;
+  }
+
+  .dark {
+    /* Dark mode colors */
+    --background: 220 10% 8%;
+    --foreground: 40 30% 92%;
+    --card: 220 10% 10%;
+    --card-foreground: 40 30% 92%;
+    --popover: 220 10% 8%;
+    --popover-foreground: 40 30% 92%;
+    --primary: 40 30% 92%;
+    --primary-foreground: 220 10% 8%;
+    --secondary: 36 30% 80%;
+    --secondary-foreground: 220 10% 8%;
+    --muted: 220 10% 15%;
+    --muted-foreground: 40 20% 70%;
+    --accent: 36 20% 60%;
+    --accent-foreground: 220 10% 8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 40 30% 92%;
+    --border: 220 10% 20%;
+    --input: 220 10% 15%;
+    --ring: 40 30% 92%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Roboto Mono", monospace;
+    background-color: hsl(var(--background));
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-attachment: fixed;
+  }
+
+  .dark body {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  }
+}
+
+/* NieR: Automata inspired UI components */
+.nier-container {
+  @apply border border-border bg-card relative overflow-hidden;
+  position: relative;
+}
+
+.nier-header {
+  @apply flex justify-between items-center px-3 py-2 border-b border-border bg-muted/30 relative z-10;
+}
+
+.nier-title {
+  @apply text-sm font-medium uppercase tracking-wider;
+}
+
+.nier-content {
+  @apply p-4 relative z-10;
+}
+
+.nier-input {
+  @apply bg-background border-border font-mono text-sm;
+}
+
+.nier-button {
+  @apply px-4 py-2 bg-accent text-accent-foreground uppercase tracking-wider text-xs font-medium border border-accent hover:bg-accent/80 transition-colors;
+}
+
+.nier-action-button {
+  @apply px-2 py-1 bg-muted text-muted-foreground uppercase tracking-wider text-xs font-medium border border-border hover:bg-muted/80 transition-colors;
+}
+
+.nier-dots-border {
+  position: relative;
+}
+
+.nier-dots-border::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-image: radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px);
+  background-size: 8px 1px;
+  background-repeat: repeat-x;
+}
+
+.nier-dots-border::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-image: radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px);
+  background-size: 8px 1px;
+  background-repeat: repeat-x;
+}
+
+.nier-menu {
+  @apply flex items-center gap-4;
+}
+
+.nier-menu-item {
+  @apply text-xs uppercase tracking-wider text-muted-foreground hover:text-secondary transition-colors;
+  position: relative;
+}
+
+.nier-menu-item::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: hsl(var(--secondary));
+  transition: width 0.3s ease;
+}
+
+.nier-menu-item:hover::after {
+  width: 100%;
+}
+
+/* Logo container with animated corners */
+.logo-container {
+  position: relative;
+  overflow: visible;
+  border-color: hsl(var(--accent)) !important;
+}
+
+.logo-corner {
+  transition: all 0.5s ease;
+  border-color: hsl(var(--accent)) !important;
+}
+
+.logo-container:hover .logo-corner {
+  width: 6px;
+  height: 6px;
+}
+
+/* System status indicator */
+.system-status {
+  @apply flex items-center gap-2 text-xs uppercase tracking-wider;
+}
+
+.status-indicator-dot {
+  position: relative;
+}
+
+.status-indicator-dot::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: 0;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  70% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Typing cursor effect */
+.typing-cursor::after {
+  content: "|";
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Search history item */
+.search-history-item {
+  @apply px-3 py-2 text-xs cursor-pointer hover:bg-muted transition-colors;
+  position: relative;
+}
+
+.search-history-item::before {
+  content: ">";
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateX(-5px);
+}
+
+.search-history-item:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.search-history-item.active {
+  @apply bg-muted;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 2px solid transparent;
+  border-top-color: hsl(var(--accent));
+  border-right-color: hsl(var(--accent));
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Glitch text effect */
+.glitch-text {
+  position: relative;
+  animation: glitch 3s infinite;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* Results section */
+.results-section {
+  position: relative;
+}
+
+.results-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, hsl(var(--border)), transparent);
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Weather widget styles */
+.weather-widget {
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.weather-widget:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.weather-widget::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, hsl(var(--accent)), transparent);
+  z-index: 1;
+}
+
+/* Weather icon container with ring effect */
+.weather-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather-icon-container::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid hsl(var(--accent));
+  opacity: 0;
+  transform: scale(1.2);
+  transition: all 0.3s ease;
+}
+
+.weather-widget:hover .weather-icon-container::after {
+  opacity: 0.5;
+  transform: scale(1.5);
+}
+
+/* Animation for weather widget when transitioning between states */
+@keyframes weatherWidgetSlide {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.weather-widget {
+  animation: weatherWidgetSlide 0.5s ease-out forwards;
+}
+
+/* Subtle scanning line animation */
+.weather-widget::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--accent)), transparent);
+  animation: scanLine 3s infinite linear;
+  z-index: 1;
+}
+
+@keyframes scanLine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* System message styling */
+.system-message {
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.system-message:hover {
+  opacity: 1;
+}
+
+/* Code block styling */
+pre {
+  background-color: hsl(var(--muted)) !important;
+  border-color: hsl(var(--border)) !important;
+}
+
+code {
+  color: hsl(var(--accent)) !important;
+}
+
+/* Markdown content styling */
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4 {
+  color: hsl(var(--primary)) !important;
+}
+
+.markdown-content a {
+  color: hsl(var(--accent)) !important;
+}
+
+.markdown-content blockquote {
+  border-color: hsl(var(--accent)) !important;
+}
+
+/* Input focus styling */
+input:focus {
+  border-color: hsl(var(--accent)) !important;
+  box-shadow: 0 0 0 1px hsl(var(--accent) / 0.3) !important;
+}
+
+/* Button hover effects */
+.nier-button:hover,
+.nier-action-button:hover {
+  box-shadow: 0 0 5px hsl(var(--accent) / 0.5);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  @apply p-2 rounded-md transition-colors;
+}
+
+.theme-toggle:hover {
+  @apply bg-muted;
+}
+
+.theme-toggle svg {
+  @apply w-4 h-4;
+}
